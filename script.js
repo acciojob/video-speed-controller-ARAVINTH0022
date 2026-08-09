@@ -8,7 +8,6 @@ const playbackSpeedRange = player.querySelector('input[name="playbackRate"]');
 const rewindBtn = player.querySelector('.player__button[data-skip="-10"]');
 const forwardBtn = player.querySelector('.player__button[data-skip="25"]');
 
-// Play/Pause toggle
 function togglePlay() {
   if (video.paused) {
     video.play();
@@ -27,7 +26,6 @@ video.addEventListener('play', updateButton);
 video.addEventListener('pause', updateButton);
 toggle.addEventListener('click', togglePlay);
 
-// Progress bar update
 function handleProgress() {
   const percent = (video.currentTime / video.duration) * 100;
   progressBar.style.flexBasis = `${percent}%`;
@@ -35,7 +33,6 @@ function handleProgress() {
 
 video.addEventListener('timeupdate', handleProgress);
 
-// Scrubbing
 function scrub(e) {
   const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
   video.currentTime = scrubTime;
@@ -45,9 +42,8 @@ let mousedown = false;
 progress.addEventListener('click', scrub);
 progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
 progress.addEventListener('mousedown', () => mousedown = true);
-progress.addEventListener('mouseup', () => mousedown = false);
+window.addEventListener('mouseup', () => mousedown = false);
 
-// Volume and Playback Speed handling
 function handleRangeUpdate() {
   video[this.name] = this.value;
 }
@@ -58,7 +54,6 @@ volumeRange.addEventListener('mousemove', handleRangeUpdate);
 playbackSpeedRange.addEventListener('change', handleRangeUpdate);
 playbackSpeedRange.addEventListener('mousemove', handleRangeUpdate);
 
-// Rewind and Forward buttons
 function skip() {
   video.currentTime += parseFloat(this.dataset.skip);
 }
